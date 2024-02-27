@@ -18,13 +18,57 @@ module.exports = () => {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
+
     plugins: [
-      
+      new HtmlWebpackPlugin({
+        template: "./index.html",
+        title: "JATE, A PWA"
+    
+      }),
+    
+      new WebpackPwaManifest({
+        name: 'JATE PWA',
+        short_name: 'JATE',
+        description: 'Just Another Text App to take notes with JS syntax.',
+        background_color: '#ffffff',
+        crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+        inject: true,
+        theme_color: '#000000',
+        start_url: '/',
+        publicPath: '/',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+          },
+        ],
+      }),
+    
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'sw.js',
+      }),
+
+
     ],
 
     module: {
       rules: [
-        
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+            },
+            plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime']
+          },
+        }
       ],
     },
   };
