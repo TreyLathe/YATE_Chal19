@@ -14,12 +14,12 @@ butInstall.addEventListener('click', async () => {
         return;
     }
     promptEvent.prompt();
-    const result = await promptEvent.userChoice;
-    if (result.outcome === 'accepted') {
-        console.log('Your PWA has been installed');
-    } else {
-        console.log('User chose to not install your PWA');
-    }
+    // const result = await promptEvent.userChoice;
+    // if (result.outcome === 'accepted') {
+    //     console.log('Your PWA has been installed');
+    // } else {
+    //     console.log('User chose to not install your PWA');
+    // }
     window.deferredPrompt = null;
     butInstall.classList.toggle('hidden', true);
 

@@ -25,14 +25,20 @@ module.exports = () => {
         title: "JATE, A PWA"
     
       }),
-    
+
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js',
+      }),
+
       new WebpackPwaManifest({
+        fingerprints: false,
+        inject: true,
         name: 'JATE PWA',
         short_name: 'JATE',
         description: 'Just Another Text App to take notes with JS syntax.',
         background_color: '#ffffff',
-        crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
-        inject: true,
+        // crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
         theme_color: '#000000',
         start_url: '/',
         publicPath: '/',
@@ -44,23 +50,16 @@ module.exports = () => {
           },
         ],
       }),
-    
-      new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'sw.js',
-      }),
-
-
     ],
 
     module: {
       rules: [
         {
-          test: /\.css$/,
+          test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.js$/,
+          test: /\.m?.js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
